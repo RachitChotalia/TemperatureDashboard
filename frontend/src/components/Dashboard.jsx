@@ -4,7 +4,6 @@ import {
   AreaChart, Area, ReferenceLine
 } from 'recharts';
 
-// --- INTERNAL ICONS ---
 const Icon = ({ path, color = "currentColor", size = 24, style = {} }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
     {path}
@@ -22,9 +21,10 @@ const Icons = {
   Rewind: (props) => <Icon path={<><polygon points="11 19 2 12 11 5 11 19"/><polygon points="22 19 13 12 22 5 22 19"/></>} {...props} />
 };
 
-const API_URL = "http://127.0.0.1:8000/api/readings";
+const API_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api/readings` 
+  : "http://127.0.0.1:8000/api/readings";;
 
-// --- CONFIGURATION ---
 const OBJECT_RANGES = [
   { name: "Ice Gel Bag",            start: "692217a74bf378bf90fcc039", end: "69222f454bf378bf90fcc294" },
   { name: "Frozen Onion",           start: "6922a6742ac4169f239852e4", end: "6922beb22ac4169f2398554f" },
@@ -33,7 +33,7 @@ const OBJECT_RANGES = [
   { name: "Frozen Tomato",          start: "69232a4913e11f2f97a58d13", end: "6923535613e11f2f97a5912b" }
 ];
 
-// Mock Data
+
 const MOCK_DATA = [
   { _id: "692217a74bf378bf90fcc040", timestamp: "2025-11-22T20:00:00Z", sensors: [{address: "0x5a", ambient_temp: 29, object_temp: 5}, {address: "0x5b", ambient_temp: 29.2, object_temp: 4.8}, {address: "0x5c", ambient_temp: 29.1, object_temp: 4.9}, {address: "0x5d", ambient_temp: 29.3, object_temp: 4.7}] },
   { _id: "692217a74bf378bf90fcc050", timestamp: "2025-11-22T20:05:00Z", sensors: [{address: "0x5a", ambient_temp: 28.5, object_temp: 8}, {address: "0x5b", ambient_temp: 28.8, object_temp: 7.9}, {address: "0x5c", ambient_temp: 28.6, object_temp: 7.8}, {address: "0x5d", ambient_temp: 28.9, object_temp: 7.7}] },
@@ -100,7 +100,7 @@ const Dashboard = () => {
       return;
     }
 
-    // Step 1: Calculate Averages
+
     const withAverages = filtered.map((doc) => {
       const sensors = doc.sensors || [];
       const validSensors = sensors.filter(s => s.ambient_temp !== undefined && s.object_temp !== undefined);
@@ -123,7 +123,7 @@ const Dashboard = () => {
       return { ...doc, enhanced: { avgAmb, avgObj, gradient, sensorMap } };
     });
 
-    // Step 2: Calculate Rate
+    //Rate calc
     const enhancedData = withAverages.map((doc, idx, arr) => {
       let rate = 0;
       if (idx > 0) {
