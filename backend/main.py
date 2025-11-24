@@ -12,7 +12,7 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
-    "https://temperature-dashboard-eosin.vercel.app/"
+    "https://temperature-dashboard-eosin.vercel.app"
 ]
 
 app.add_middleware(
