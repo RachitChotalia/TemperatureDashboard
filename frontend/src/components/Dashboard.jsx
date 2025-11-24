@@ -21,7 +21,7 @@ const Icons = {
   Rewind: (props) => <Icon path={<><polygon points="11 19 2 12 11 5 11 19"/><polygon points="22 19 13 12 22 5 22 19"/></>} {...props} />
 };
 
-const API_URL = "https://temperaturedashboard.onrender.com";
+const API_URL = "https://temperaturedashboard.onrender.com/api/readings";
 
 const OBJECT_RANGES = [
   { name: "Ice Gel Bag",            start: "692217a74bf378bf90fcc039", end: "69222f454bf378bf90fcc294" },
